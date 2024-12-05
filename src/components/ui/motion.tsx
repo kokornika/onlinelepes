@@ -1,42 +1,44 @@
 import { motion } from 'framer-motion';
+import type { ReactNode } from 'react';
 
-export function FadeIn({ children, delay = 0, ...props }) {
+interface FadeInProps {
+  children: ReactNode;
+  delay?: number;
+}
+
+export function FadeIn({ children, delay = 0 }: FadeInProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{
-        duration: 0.5,
-        delay,
-        ease: [0.21, 0.47, 0.32, 0.98],
-      }}
-      {...props}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay }}
     >
       {children}
     </motion.div>
   );
 }
 
-export function SlideIn({ children, direction = 'left', delay = 0, ...props }) {
-  const directions = {
-    left: { x: -60, y: 0 },
-    right: { x: 60, y: 0 },
-    up: { x: 0, y: 60 },
-    down: { x: 0, y: -60 },
-  };
+interface SlideInProps {
+  children: ReactNode;
+  delay?: number;
+  direction?: 'left' | 'right' | 'up' | 'down';
+}
+
+const directionVariants = {
+  left: { x: -50, y: 0 },
+  right: { x: 50, y: 0 },
+  up: { x: 0, y: 50 },
+  down: { x: 0, y: -50 },
+} as const;
+
+export function SlideIn({ children, delay = 0, direction = 'up' }: SlideInProps) {
+  const initial = directionVariants[direction];
 
   return (
     <motion.div
-      initial={{ opacity: 0, ...directions[direction] }}
-      whileInView={{ opacity: 1, x: 0, y: 0 }}
-      viewport={{ once: true }}
-      transition={{
-        duration: 0.7,
-        delay,
-        ease: [0.21, 0.47, 0.32, 0.98],
-      }}
-      {...props}
+      initial={{ opacity: 0, ...initial }}
+      animate={{ opacity: 1, x: 0, y: 0 }}
+      transition={{ duration: 0.5, delay }}
     >
       {children}
     </motion.div>

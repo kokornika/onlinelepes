@@ -1,7 +1,6 @@
 import { ArrowRight, Code2, Rocket, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { FadeIn } from '@/components/ui/motion';
-import { motion } from 'framer-motion';
 
 export function Hero() {
   return (
