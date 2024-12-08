@@ -1,5 +1,7 @@
-import { ArrowRight, Search, Target, LineChart, PieChart, Users, DollarSign } from 'lucide-react';
+import { ArrowRight, Search, Target, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { useNavigate } from 'react-router-dom';
 import { FadeIn, SlideIn } from '@/components/ui/motion';
 
@@ -23,7 +25,7 @@ export function Marketing() {
 
   const services = [
     {
-      icon: <Search className="h-6 w-6" />,
+      icon: <Search className="h-5 w-5 sm:h-6 sm:w-6" />,
       title: 'Google Hirdetések',
       description: 'Jelenjen meg az első helyen, amikor szolgáltatását keresik. Azonnali láthatóság és több érdeklődő.',
       benefits: ['Azonnali megjelenés', 'Több látogató', 'Helyi vásárlók'],
@@ -31,7 +33,7 @@ export function Marketing() {
       path: '/szolgaltatasok/marketing/google-ads'
     },
     {
-      icon: <Users className="h-6 w-6" />,
+      icon: <Users className="h-5 w-5 sm:h-6 sm:w-6" />,
       title: 'Facebook & Instagram',
       description: 'Érje el a potenciális vásárlóit a közösségi médiában. Látványos hirdetések, több követő.',
       benefits: ['Célzott közönség', 'Képes hirdetések', 'Márkaépítés'],
@@ -39,7 +41,7 @@ export function Marketing() {
       path: '/szolgaltatasok/marketing/facebook-ads'
     },
     {
-      icon: <Target className="h-6 w-6" />,
+      icon: <Target className="h-5 w-5 sm:h-6 sm:w-6" />,
       title: 'Keresőoptimalizálás',
       description: 'Kerüljön az első oldalra a Google keresőben. Folyamatos látogatók hirdetési költség nélkül.',
       benefits: ['Hosszútávú eredmény', 'Ingyenes látogatók', 'Erős márka'],
@@ -48,100 +50,84 @@ export function Marketing() {
     }
   ];
 
-  const results = [
-    {
-      icon: <LineChart className="h-6 w-6" />,
-      metric: '+156%',
-      label: 'Több látogató',
-      gradient: 'from-green-500 to-emerald-500'
-    },
-    {
-      icon: <PieChart className="h-6 w-6" />,
-      metric: '+85%',
-      label: 'Több vásárló',
-      gradient: 'from-blue-500 to-cyan-500'
-    },
-    {
-      icon: <DollarSign className="h-6 w-6" />,
-      metric: '98%',
-      label: 'Célzott forgalom',
-      gradient: 'from-purple-500 to-pink-500'
-    }
-  ];
-
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-0 left-0 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl animate-blob"></div>
-          <div className="absolute top-0 right-0 w-72 h-72 bg-yellow-500 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000"></div>
-          <div className="absolute bottom-0 left-1/2 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000"></div>
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <FadeIn>
-            <div className="text-center">
-              <h1 className="text-4xl md:text-5xl font-bold">
-                Online <span className="bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text">Marketing</span>
-              </h1>
-              <p className="mt-6 text-xl text-gray-600 max-w-3xl mx-auto">
-                A magyar vállalkozások 68%-a láthatatlan az interneten, így rengeteg vásárlót veszítenek el. 
-                Ne hagyja, hogy versenytársai megszerezzék az Ön vásárlóit! Kezdje el most az online marketinget!
-              </p>
-              <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-                <Button 
-                  size="lg"
-                  className="bg-gradient-to-r from-purple-600 to-blue-500 text-white hover:opacity-90 transition-opacity"
-                >
-                  Ingyenes Konzultáció <ArrowRight className="ml-2" />
-                </Button>
-                <Button 
-                  size="lg"
-                  variant="outline"
-                  className="group border-2"
-                >
-                  <span className="mr-2">+36 30 123 4567</span>
-                  <span className="bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text group-hover:opacity-80">
-                    Azonnali Kapcsolat
-                  </span>
-                </Button>
-              </div>
-            </div>
-          </FadeIn>
-
-          {/* Statistics */}
-          <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6">
-            {statistics.map((stat, index) => (
-              <div key={index} className="bg-white/80 backdrop-blur-sm rounded-xl p-6 border shadow-sm">
-                <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text">
-                  {stat.value}
-                </div>
-                <div className="mt-2 text-gray-600">{stat.label}</div>
-              </div>
-            ))}
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12">
+        <FadeIn>
+          <div className="text-center">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold">
+              Online <span className="bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text">Marketing</span>
+            </h1>
+            <p className="mt-4 text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
+              A magyar vállalkozások 68%-a láthatatlan az interneten, így rengeteg vásárlót veszítenek el. 
+              Ne hagyja, hogy versenytársai megszerezzék az Ön vásárlóit! Kezdje el most az online marketinget!
+            </p>
           </div>
-        </div>
-      </section>
+        </FadeIn>
 
-      {/* Services Section */}
-      <section className="py-20 bg-white relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Marketing Introduction */}
+        <div className="mt-12 bg-white rounded-xl shadow-lg border p-6 sm:p-8">
           <FadeIn>
-            <div className="text-center">
-              <span className="inline-block px-4 py-2 rounded-full bg-gradient-to-r from-purple-100 to-blue-100 text-purple-700 text-sm font-medium mb-4">
-                Szolgáltatásaink
-              </span>
-              <h2 className="text-4xl font-bold">
-                Online Marketing <span className="bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text">Megoldások</span>
+            <h2 className="text-xl sm:text-2xl font-semibold mb-4">
+              Miért fontos az online marketing?
+            </h2>
+            <div className="space-y-4 text-gray-600">
+              <p>
+                Az online marketing napjainkban már nem opció, hanem szükségszerűség. A vásárlók 82%-a először 
+                az interneten keres információt, mielőtt döntést hozna egy termék vagy szolgáltatás megvásárlásáról.
+              </p>
+              <p>
+                Egy jól felépített online marketing stratégia segítségével:
+              </p>
+              <ul className="list-none space-y-2">
+                <li className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-600 to-blue-500" />
+                  <span>Célzottan érheti el potenciális ügyfeleit</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-600 to-blue-500" />
+                  <span>Mérhető és optimalizálható eredményeket érhet el</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-600 to-blue-500" />
+                  <span>Költséghatékonyan növelheti vállalkozása bevételeit</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-600 to-blue-500" />
+                  <span>Versenyelőnyre tehet szert a piacon</span>
+                </li>
+              </ul>
+            </div>
+          </FadeIn>
+        </div>
+
+        {/* Statistics */}
+        <div className="mt-8 sm:mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {statistics.map((stat, index) => (
+            <div key={index} className="bg-white rounded-xl p-4 sm:p-6 border shadow-sm">
+              <div className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text">
+                {stat.value}
+              </div>
+              <div className="mt-2 text-sm sm:text-base text-gray-600">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Services */}
+        <div className="mt-16">
+          <FadeIn>
+            <div className="text-center mb-8">
+              <h2 className="text-2xl sm:text-3xl font-bold">
+                Marketing <span className="bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text">Szolgáltatásaink</span>
               </h2>
-              <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
-                Egyszerű és hatékony megoldások, hogy vállalkozása több vásárlót szerezzen az internetről
+              <p className="mt-4 text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
+                Válassza ki az Ön vállalkozásához legjobban illő marketing megoldást
               </p>
             </div>
           </FadeIn>
 
-          <div className="mt-16 grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
               <SlideIn key={index} delay={0.2 * index} direction="up">
                 <div 
@@ -165,50 +151,139 @@ export function Marketing() {
                         </div>
                       ))}
                     </div>
+                    <Button 
+                      className="mt-6 w-full bg-gradient-to-r from-purple-600 to-blue-500 text-white"
+                      onClick={() => navigate(service.path)}
+                    >
+                      További információk <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
                   </div>
                 </div>
               </SlideIn>
             ))}
           </div>
         </div>
-      </section>
 
-      {/* Results Section */}
-      <section className="py-20 bg-gradient-to-br from-purple-50 to-blue-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Contact Section */}
+        <div className="mt-20">
           <FadeIn>
-            <div className="text-center">
-              <span className="inline-block px-4 py-2 rounded-full bg-gradient-to-r from-purple-100 to-blue-100 text-purple-700 text-sm font-medium mb-4">
-                Valós Eredmények
-              </span>
-              <h2 className="text-4xl font-bold">
-                Marketing <span className="bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text">Mutatók</span>
+            <div className="text-center mb-8">
+              <h2 className="text-2xl sm:text-3xl font-bold">
+                Kezdjük El a <span className="bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text">Közös Munkát</span>
               </h2>
-              <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
-                Mérhető eredmények az online marketing kampányokból
+              <p className="mt-4 text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
+                Vegye fel velünk a kapcsolatot és beszéljük át, hogyan tudunk segíteni vállalkozása online marketing stratégiájának kialakításában
               </p>
             </div>
           </FadeIn>
 
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-            {results.map((result, index) => (
-              <SlideIn key={index} delay={0.2 * index} direction="up">
-                <div className="group bg-white rounded-xl shadow-lg border p-8 text-center hover:border-purple-200 transition-all duration-300 hover:shadow-2xl relative overflow-hidden">
-                  {/* Gradient background that shows on hover */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${result.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
-                  
-                  <div className="relative">
-                    <div className={`w-16 h-16 mx-auto rounded-xl bg-gradient-to-br ${result.gradient} flex items-center justify-center text-white transform group-hover:scale-110 transition-transform duration-300`}>
-                      {result.icon}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+            {/* Contact Form */}
+            <SlideIn direction="up">
+              <div className="bg-white rounded-xl shadow-lg border p-6 sm:p-8">
+                <h3 className="text-xl sm:text-2xl font-semibold mb-6">Kérjen Ajánlatot</h3>
+                <form className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                        Név
+                      </label>
+                      <Input
+                        type="text"
+                        id="name"
+                        placeholder="Az Ön neve"
+                      />
                     </div>
-                    <div className="mt-6 text-4xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text">
-                      {result.metric}
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                        E-mail
+                      </label>
+                      <Input
+                        type="email"
+                        id="email"
+                        placeholder="pelda@email.com"
+                      />
                     </div>
-                    <div className="mt-2 text-gray-600">{result.label}</div>
                   </div>
+
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                      Telefonszám
+                    </label>
+                    <Input
+                      type="tel"
+                      id="phone"
+                      placeholder="+36 30 123 4567"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="service" className="block text-sm font-medium text-gray-700 mb-1">
+                      Melyik szolgáltatás érdekli?
+                    </label>
+                    <Input
+                      type="text"
+                      id="service"
+                      placeholder="Pl.: Google Hirdetések, Facebook Marketing, stb."
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                      Üzenet
+                    </label>
+                    <Textarea
+                      id="message"
+                      rows={4}
+                      placeholder="Írja le projektjét és elvárásait..."
+                    />
+                  </div>
+
+                  <Button className="w-full bg-gradient-to-r from-purple-600 to-blue-500 text-white">
+                    Ajánlatkérés Küldése <ArrowRight className="ml-2" />
+                  </Button>
+                </form>
+              </div>
+            </SlideIn>
+
+            {/* Contact Info */}
+            <div className="space-y-6">
+              <SlideIn direction="up" delay={0.1}>
+                <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl p-6 sm:p-8">
+                  <h3 className="text-xl font-semibold mb-6">Miért Válasszon Minket?</h3>
+                  <ul className="space-y-4">
+                    <li className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center text-white">
+                        <Search className="h-4 w-4" />
+                      </div>
+                      <span>Szakértői tudás a digitális marketing területén</span>
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center text-white">
+                        <Target className="h-4 w-4" />
+                      </div>
+                      <span>Mérhető és optimalizált kampányok</span>
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center text-white">
+                        <Users className="h-4 w-4" />
+                      </div>
+                      <span>Személyre szabott marketing stratégiák</span>
+                    </li>
+                  </ul>
                 </div>
               </SlideIn>
-            ))}
+
+              <SlideIn direction="up" delay={0.2}>
+                <div className="bg-white rounded-xl shadow-lg border p-6 sm:p-8">
+                  <h3 className="text-xl font-semibold mb-4">Telefonos Elérhetőség</h3>
+                  <p className="text-gray-600">H-V: 08:00 - 20:00</p>
+                  <a href="tel:+36303551793" className="mt-2 text-2xl font-semibold bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text block">
+                    +36 30 355 1793
+                  </a>
+                </div>
+              </SlideIn>
+            </div>
           </div>
         </div>
       </section>

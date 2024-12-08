@@ -1,9 +1,9 @@
-import { Code, Globe, Megaphone, QrCode } from 'lucide-react';
+import { Code, Megaphone, QrCode } from 'lucide-react';
 
 export const serviceData = [
   {
     icon: Code,
-    title: 'Digitális Megoldások',
+    title: 'Weboldal Fejlesztés',
     description:
       'Modern, reszponzív és többnyelvű weboldalak tervezése és fejlesztése, amely tökéletesen működik minden eszközön.',
     path: '/szolgaltatasok/weboldal-fejlesztes',
@@ -25,13 +25,5 @@ export const serviceData = [
     link: 'https://qrnevjegy.hu/',
     isExternal: true,
     gradient: 'from-orange-500 to-red-500'
-  },
-  {
-    icon: Globe,
-    title: 'Automatizált Megoldások',
-    description:
-      'Személyre szabott megoldások és egyedi funkciók fejlesztése az Ön igényei szerint.',
-    path: '/szolgaltatasok/egyedi-fejlesztes',
-    gradient: 'from-green-500 to-emerald-500'
   }
 ] as const;

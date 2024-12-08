@@ -7,11 +7,13 @@ import { ContactCTA } from '@/components/automated-solutions/ContactCTA';
 export function AutomatedSolutions() {
   return (
     <div className="min-h-screen">
-      <HeroSection />
-      <Features />
-      <IndustrySolutions />
-      <Benefits />
-      <ContactCTA />
+      <div className="space-y-12 sm:space-y-16 lg:space-y-20">
+        <HeroSection />
+        <Features />
+        <IndustrySolutions />
+        <Benefits />
+        <ContactCTA />
+      </div>
     </div>
   );
 }

@@ -11,16 +11,12 @@ import {
 
 const faqs = [
   {
-    question: 'Miért van szükségem weboldalra?',
-    answer: 'A mai digitális világban a weboldal az első számú kapcsolódási pont Ön és ügyfelei között. A vásárlók 82%-a először az interneten keres, mielőtt szolgáltatást vagy terméket venne igénybe. Weboldal nélkül ezeket a potenciális ügyfeleket elveszíti.'
-  },
-  {
     question: 'Mennyi idő alatt készül el egy projekt?',
     answer: 'Egy egyszerűbb weboldal 2-3 hét alatt elkészül, míg egy összetettebb webáruház vagy egyedi funkciókkal rendelkező oldal 4-8 hetet vesz igénybe. A pontos időtartamot a projekt követelményei határozzák meg.'
   },
   {
     question: 'Mennyibe kerül egy weboldal vagy marketing kampány?',
-    answer: 'Az árak a projekt méretétől és komplexitásától függnek. Egy bemutatkozó oldal már 200.000 Ft-tól elérhető, míg egy marketing kampány havi 100.000 Ft-tól indul. Kérjen egyedi ajánlatot és találjuk meg az Ön igényeinek és költségvetésének megfelelő megoldást!'
+    answer: 'Az árak a projekt méretétől és komplexitásától függnek. Egy bemutatkozó oldal már 80.000 Ft-tól elérhető, míg egy marketing kampány havi 100.000 Ft-tól indul. Kérjen egyedi ajánlatot és találjuk meg az Ön igényeinek és költségvetésének megfelelő megoldást!'
   },
   {
     question: 'Kapok támogatást a projekt elkészülte után?',

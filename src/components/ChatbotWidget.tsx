@@ -25,7 +25,6 @@ export function ChatbotWidget() {
   const handleSend = async () => {
     if (!inputValue.trim() || isLoading) return;
 
-    // Add user message
     const userMessage: Message = {
       content: inputValue,
       sender: 'user',
@@ -81,20 +80,20 @@ export function ChatbotWidget() {
     return (
       <Button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-4 right-4 w-14 h-14 rounded-full bg-gradient-to-r from-purple-600 to-blue-500 text-white shadow-lg hover:opacity-90 transition-all duration-300"
+        className="fixed bottom-4 right-4 w-12 h-12 rounded-full bg-gradient-to-r from-purple-600 to-blue-500 text-white shadow-lg hover:opacity-90 transition-all duration-300"
       >
-        <MessageSquare className="h-6 w-6" />
+        <MessageSquare className="h-5 w-5" />
       </Button>
     );
   }
 
   return (
     <FadeIn>
-      <div className="fixed bottom-4 right-4 w-96 h-[600px] bg-white rounded-2xl shadow-2xl border overflow-hidden">
+      <div className="fixed inset-0 sm:inset-auto sm:bottom-4 sm:right-4 sm:w-[380px] sm:h-[600px] bg-white sm:rounded-2xl shadow-2xl border flex flex-col z-50">
         {/* Header */}
-        <div className="bg-gradient-to-r from-purple-600 to-blue-500 p-4 text-white flex items-center justify-between">
+        <div className="bg-gradient-to-r from-purple-600 to-blue-500 p-4 text-white flex items-center justify-between sm:rounded-t-2xl">
           <div className="flex items-center gap-2">
-            <Bot className="h-6 w-6" />
+            <Bot className="h-5 w-5" />
             <div>
               <div className="font-semibold">AI Asszisztens</div>
               <div className="text-sm opacity-90">Online</div>
@@ -111,7 +110,7 @@ export function ChatbotWidget() {
         </div>
 
         {/* Messages */}
-        <div className="h-[calc(100%-8rem)] overflow-y-auto p-4 space-y-4">
+        <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {messages.map((message, index) => (
             <SlideIn key={index} direction={message.sender === 'user' ? 'left' : 'right'}>
               <div className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -148,7 +147,7 @@ export function ChatbotWidget() {
         </div>
 
         {/* Input */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 bg-white border-t">
+        <div className="p-4 border-t bg-white">
           <div className="flex gap-2">
             <Input
               value={inputValue}
@@ -163,7 +162,7 @@ export function ChatbotWidget() {
               className="bg-gradient-to-r from-purple-600 to-blue-500 text-white"
               disabled={isLoading}
             >
-              <Send className="h-5 w-5" />
+              <Send className="h-4 w-4" />
             </Button>
           </div>
         </div>

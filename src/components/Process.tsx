@@ -51,36 +51,26 @@ export function Process() {
         </div>
       </FadeIn>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-6">
         {steps.map((step, index) => (
           <SlideIn key={index} delay={0.1 * index} direction="up">
             <div className="relative">
               {/* Step number */}
-              <div className="absolute -top-2 -left-2 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-purple-600 to-blue-500 flex items-center justify-center text-white font-bold text-xs sm:text-sm z-20">
+              <div className="absolute -top-2 -left-2 w-6 h-6 rounded-full bg-gradient-to-br from-purple-600 to-blue-500 flex items-center justify-center text-white font-bold text-xs z-20">
                 {index + 1}
               </div>
 
-              {/* Connecting line on mobile */}
-              {index < steps.length - 1 && (
-                <div className="sm:hidden absolute top-1/2 left-1/2 w-4 h-0.5 bg-gradient-to-r from-purple-200 to-blue-200 transform -translate-y-1/2 translate-x-full z-0" />
-              )}
-
-              {/* Connecting line on desktop */}
-              {index < steps.length - 1 && (
-                <div className="hidden sm:block absolute top-1/2 left-full w-full h-0.5 bg-gradient-to-r from-purple-200 to-blue-200 transform -translate-y-1/2 z-0" />
-              )}
-
               {/* Card */}
-              <div className="group bg-white p-4 sm:p-6 rounded-xl shadow-sm border hover:border-purple-200 transition-all duration-300 relative z-10">
+              <div className="group bg-white p-3 sm:p-4 lg:p-6 rounded-xl shadow-sm border hover:border-purple-200 transition-all duration-300 relative z-10 h-full">
                 {/* Gradient background that shows on hover */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${step.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500 rounded-xl`} />
                 
                 <div className="relative flex flex-col h-full">
-                  <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br ${step.gradient} flex items-center justify-center text-white transform group-hover:scale-110 transition-transform duration-300 mb-3 sm:mb-4`}>
+                  <div className={`w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl bg-gradient-to-br ${step.gradient} flex items-center justify-center text-white transform group-hover:scale-110 transition-transform duration-300 mb-2 sm:mb-3 lg:mb-4`}>
                     {step.icon}
                   </div>
-                  <h3 className="text-lg sm:text-xl font-semibold mb-2">{step.title}</h3>
-                  <p className="text-sm sm:text-base text-gray-600">{step.description}</p>
+                  <h3 className="text-sm sm:text-base lg:text-lg font-semibold mb-1 sm:mb-2">{step.title}</h3>
+                  <p className="text-xs sm:text-sm lg:text-base text-gray-600">{step.description}</p>
                 </div>
               </div>
             </div>

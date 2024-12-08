@@ -3,12 +3,12 @@ import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
+  NavigationMenuLink
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
-import { Code, Megaphone, Globe2, Search, Users, LineChart } from 'lucide-react';
+import { Code, Megaphone, Search, Users, LineChart, Settings } from 'lucide-react';
 
 const services = {
   development: {
@@ -43,11 +43,11 @@ const services = {
       }
     ]
   },
-  automation: {
-    title: "Automatizált Megoldások",
-    description: "Tehermentesítő szoftverek fejlesztése a mindennapi adminisztrációhoz.",
-    icon: <Globe2 className="h-5 w-5" />,
-    href: "/szolgaltatasok/egyedi-fejlesztes"
+  maintenance: {
+    title: "Karbantartás",
+    description: "Folyamatos támogatás és karbantartás weboldalához.",
+    icon: <Settings className="h-5 w-5" />,
+    href: "/szolgaltatasok/karbantartas"
   }
 };
 
@@ -81,7 +81,7 @@ export function Navigation() {
             Szolgáltatások
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[800px] lg:grid-cols-3">
+            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
               <li className="row-span-3">
                 <NavigationMenuLink asChild>
                   <Link
@@ -100,49 +100,47 @@ export function Navigation() {
                   </Link>
                 </NavigationMenuLink>
               </li>
-              <li className="col-span-2 row-span-3">
-                <div className="flex flex-col h-full">
-                  <div className="mb-4 flex items-center gap-2">
-                    {services.marketing.icon}
-                    <Link
-                      to={services.marketing.href}
-                      className="text-lg font-medium hover:text-purple-600 transition-colors"
-                    >
-                      {services.marketing.title}
-                    </Link>
-                  </div>
-                  <ul className="grid grid-cols-2 gap-3">
-                    {services.marketing.subItems.map((item, index) => (
-                      <ListItem
-                        key={index}
-                        title={
-                          <div className="flex items-center gap-2">
-                            {item.icon}
-                            <span>{item.title}</span>
-                          </div>
-                        }
-                        href={item.href}
-                      >
-                        {item.description}
-                      </ListItem>
-                    ))}
-                  </ul>
+              <li className="col-span-1">
+                <div className="mb-4 flex items-center gap-2">
+                  {services.marketing.icon}
+                  <Link
+                    to={services.marketing.href}
+                    className="text-lg font-medium hover:text-purple-600 transition-colors"
+                  >
+                    {services.marketing.title}
+                  </Link>
                 </div>
+                <ul className="space-y-2">
+                  {services.marketing.subItems.map((item, index) => (
+                    <ListItem
+                      key={index}
+                      title={
+                        <div className="flex items-center gap-2">
+                          {item.icon}
+                          <span>{item.title}</span>
+                        </div>
+                      }
+                      href={item.href}
+                    >
+                      {item.description}
+                    </ListItem>
+                  ))}
+                </ul>
               </li>
-              <li className="row-span-3">
+              <li className="row-span-1">
                 <NavigationMenuLink asChild>
                   <Link
                     className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-purple-50 to-blue-50 p-6 no-underline outline-none focus:shadow-md"
-                    to={services.automation.href}
+                    to={services.maintenance.href}
                   >
                     <div className="mb-2 flex items-center gap-2">
-                      {services.automation.icon}
+                      {services.maintenance.icon}
                       <span className="text-lg font-medium">
-                        {services.automation.title}
+                        {services.maintenance.title}
                       </span>
                     </div>
                     <p className="text-sm leading-tight text-muted-foreground">
-                      {services.automation.description}
+                      {services.maintenance.description}
                     </p>
                   </Link>
                 </NavigationMenuLink>
