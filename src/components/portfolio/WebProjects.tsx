@@ -38,39 +38,39 @@ const webProjects = [
 
 export function WebProjects() {
   const [showAll, setShowAll] = useState(false);
-  const displayedProjects = showAll ? webProjects : webProjects.slice(0, 3);
+  const displayedProjects = showAll ? webProjects : webProjects.slice(0, 2);
 
   return (
     <>
-      <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
         {displayedProjects.map((project, index) => (
-          <SlideIn key={index} delay={0.2 * index} direction="up">
-            <div className="group relative bg-white rounded-xl shadow-sm border overflow-hidden">
-              <div className="aspect-w-16 aspect-h-9 relative overflow-hidden">
+          <SlideIn key={index} delay={0.1 * index} direction="up">
+            <div className="group bg-white rounded-xl shadow-lg border hover:border-purple-200 transition-all duration-300 overflow-hidden">
+              <div className="aspect-w-16 aspect-h-9 relative">
                 <img
                   src={project.image}
                   alt={project.title}
-                  className="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-300"
+                  className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
                   <div className="absolute bottom-4 left-4 right-4">
                     <Button
                       variant="secondary"
-                      className="w-full bg-white/90 hover:bg-white"
+                      className="w-full bg-white/90 hover:bg-white text-sm sm:text-base"
                     >
                       Részletek <ExternalLink className="ml-2 h-4 w-4" />
                     </Button>
                   </div>
                 </div>
               </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold">{project.title}</h3>
-                <p className="mt-2 text-gray-600">{project.description}</p>
-                <div className="mt-4 flex flex-wrap gap-2">
+              <div className="p-4 sm:p-6">
+                <h3 className="text-lg sm:text-xl font-semibold mb-2">{project.title}</h3>
+                <p className="text-gray-600 text-sm sm:text-base mb-4">{project.description}</p>
+                <div className="flex flex-wrap gap-2">
                   {project.tags.map((tag, tagIndex) => (
                     <span
                       key={tagIndex}
-                      className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-50 text-purple-700"
+                      className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs sm:text-sm font-medium bg-purple-50 text-purple-700"
                     >
                       {tag}
                     </span>
@@ -82,13 +82,12 @@ export function WebProjects() {
         ))}
       </div>
       
-      {webProjects.length > 3 && (
-        <div className="mt-12 text-center">
+      {webProjects.length > 2 && (
+        <div className="mt-8 sm:mt-12 text-center">
           <Button
             variant="outline"
-            size="lg"
             onClick={() => setShowAll(!showAll)}
-            className="border-2"
+            className="w-full sm:w-auto border-2"
           >
             {showAll ? 'Kevesebb Projekt' : 'További Projektek'}{' '}
             <ChevronDown className={`ml-2 h-4 w-4 transition-transform ${showAll ? 'rotate-180' : ''}`} />

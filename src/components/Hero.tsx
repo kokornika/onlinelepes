@@ -7,11 +7,11 @@ export function Hero() {
   const navigate = useNavigate();
 
   return (
-    <div className="relative overflow-hidden bg-white/50 backdrop-blur-sm pt-32 pb-20">
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="relative w-full">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <FadeIn delay={0.2}>
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
               <span className="block">Modern Weboldalak</span>
               <span className="block mt-2 bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text">
                 Amelyek Értéket Teremtenek
@@ -20,18 +20,18 @@ export function Hero() {
           </FadeIn>
           
           <FadeIn delay={0.4}>
-            <p className="mt-8 text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="mt-6 text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
               Professzionális weboldalkészítés modern technológiákkal. Segítünk online jelenlétének 
               kialításában, hogy vállalkozása sikeresen működjön a digitális térben.
             </p>
           </FadeIn>
 
           <FadeIn delay={0.6}>
-            <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+            <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
               <Link to="/kezdjuk-el">
                 <Button 
                   size="lg" 
-                  className="bg-gradient-to-r from-purple-600 to-blue-500 text-white hover:opacity-90 transition-opacity"
+                  className="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-blue-500 text-white hover:opacity-90 transition-opacity"
                 >
                   Kezdjük El <ArrowRight className="ml-2" size={20} />
                 </Button>
@@ -39,7 +39,7 @@ export function Hero() {
               <Button 
                 size="lg" 
                 variant="outline"
-                className="border-2 hover:bg-gradient-to-r hover:from-purple-50 hover:to-blue-50"
+                className="w-full sm:w-auto border-2 hover:bg-gradient-to-r hover:from-purple-50 hover:to-blue-50"
                 onClick={() => navigate('/referenciak')}
               >
                 Referenciák Megtekintése
@@ -47,7 +47,7 @@ export function Hero() {
             </div>
           </FadeIn>
 
-          <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
             {[
               {
                 icon: <Rocket className="h-6 w-6 text-purple-600" />,

@@ -12,38 +12,38 @@ export function HomePage() {
     <div className="relative">
       <BackgroundGradient />
       
-      {/* Hero Section - Full viewport height */}
-      <section className="min-h-screen">
+      {/* Hero Section */}
+      <section className="min-h-[calc(100vh-4rem)] flex items-center">
         <Hero />
       </section>
 
-      {/* Services Section - Consistent padding and spacing */}
-      <section className="py-24 bg-white">
+      {/* Services Section */}
+      <section className="py-12 md:py-16 lg:py-24 bg-white/80 backdrop-blur-sm">
         <Services />
       </section>
 
-      {/* Process Section - Visual balance */}
-      <section className="py-24 bg-gradient-to-br from-purple-50 to-blue-50">
+      {/* Process Section */}
+      <section className="py-12 md:py-16 lg:py-24 bg-gradient-to-br from-purple-50/80 to-blue-50/80 backdrop-blur-sm">
         <Process />
       </section>
 
-      {/* Portfolio Section - Showcase work */}
-      <section className="py-24 bg-white">
+      {/* Portfolio Section */}
+      <section className="py-12 md:py-16 lg:py-24 bg-white/80 backdrop-blur-sm">
         <Portfolio />
       </section>
 
-      {/* Social Proof - Build trust */}
-      <section className="py-24 bg-gradient-to-br from-purple-50 to-blue-50">
+      {/* Social Proof Section */}
+      <section className="py-12 md:py-16 lg:py-24 bg-gradient-to-br from-purple-50/80 to-blue-50/80 backdrop-blur-sm">
         <SocialProof />
       </section>
 
-      {/* FAQ Section - Help users */}
-      <section className="py-24 bg-white">
+      {/* FAQ Section */}
+      <section className="py-12 md:py-16 lg:py-24 bg-white/80 backdrop-blur-sm">
         <FAQ />
       </section>
 
-      {/* Contact Section - Clear CTA */}
-      <section className="py-24 bg-gradient-to-br from-purple-50 to-blue-50">
+      {/* Contact Section */}
+      <section className="py-12 md:py-16 lg:py-24 bg-gradient-to-br from-purple-50/80 to-blue-50/80 backdrop-blur-sm">
         <Contact />
       </section>
     </div>

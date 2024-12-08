@@ -24,27 +24,6 @@ const creativeProjects = [
     image: 'https://images.unsplash.com/photo-1616469829581-73993eb86b02?auto=format&fit=crop&q=80&w=800&h=600',
     category: 'Mobile Design',
     fullImage: 'https://images.unsplash.com/photo-1616469829581-73993eb86b02?auto=format&fit=crop&q=80&w=1600&h=900'
-  },
-  {
-    title: 'Landing Page Design',
-    description: 'Konverzióra optimalizált landing page design.',
-    image: 'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&q=80&w=800&h=600',
-    category: 'Web Design',
-    fullImage: 'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&q=80&w=1600&h=900'
-  },
-  {
-    title: 'Social Media Kit',
-    description: 'Egységes social media megjelenés tervezése.',
-    image: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?auto=format&fit=crop&q=80&w=800&h=600',
-    category: 'Social Design',
-    fullImage: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?auto=format&fit=crop&q=80&w=1600&h=900'
-  },
-  {
-    title: 'Dashboard Design',
-    description: 'Komplex admin felület és dashboard design.',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800&h=600',
-    category: 'UI Design',
-    fullImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1600&h=900'
   }
 ];
 
@@ -64,26 +43,26 @@ export function CreativeProjects() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const displayedProjects = showAll ? creativeProjects : creativeProjects.slice(0, 3);
+  const displayedProjects = showAll ? creativeProjects : creativeProjects.slice(0, 2);
 
   return (
     <>
-      <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
         {displayedProjects.map((project, index) => (
-          <SlideIn key={index} delay={0.2 * index} direction="up">
-            <div className="group relative bg-white rounded-xl shadow-sm border overflow-hidden">
-              <div className="aspect-w-16 aspect-h-9 relative overflow-hidden">
+          <SlideIn key={index} delay={0.1 * index} direction="up">
+            <div className="group bg-white rounded-xl shadow-lg border hover:border-purple-200 transition-all duration-300 overflow-hidden">
+              <div className="aspect-w-16 aspect-h-9 relative">
                 <img
                   src={project.image}
                   alt={project.title}
-                  className="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-300"
+                  className="w-full h-full object-cover"
                 />
                 {!isMobile && (
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
                     <div className="absolute bottom-4 left-4 right-4">
                       <Button
                         variant="secondary"
-                        className="w-full bg-white/90 hover:bg-white"
+                        className="w-full bg-white/90 hover:bg-white text-sm sm:text-base"
                         onClick={() => setSelectedImage(project.fullImage)}
                       >
                         <Maximize2 className="h-4 w-4 mr-2" /> Nagyítás
@@ -92,27 +71,26 @@ export function CreativeProjects() {
                   </div>
                 )}
               </div>
-              <div className="p-6">
+              <div className="p-4 sm:p-6">
                 <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-xl font-semibold">{project.title}</h3>
+                  <h3 className="text-lg sm:text-xl font-semibold">{project.title}</h3>
                   <span className="px-2 py-1 text-xs font-medium bg-purple-50 text-purple-700 rounded-full">
                     {project.category}
                   </span>
                 </div>
-                <p className="text-gray-600">{project.description}</p>
+                <p className="text-gray-600 text-sm sm:text-base">{project.description}</p>
               </div>
             </div>
           </SlideIn>
         ))}
       </div>
 
-      {creativeProjects.length > 3 && (
-        <div className="mt-12 text-center">
+      {creativeProjects.length > 2 && (
+        <div className="mt-8 sm:mt-12 text-center">
           <Button
             variant="outline"
-            size="lg"
             onClick={() => setShowAll(!showAll)}
-            className="border-2"
+            className="w-full sm:w-auto border-2"
           >
             {showAll ? 'Kevesebb Projekt' : 'További Projektek'}{' '}
             <ChevronDown className={`ml-2 h-4 w-4 transition-transform ${showAll ? 'rotate-180' : ''}`} />
@@ -126,7 +104,7 @@ export function CreativeProjects() {
           className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
           onClick={() => setSelectedImage(null)}
         >
-          <div className="relative max-w-7xl w-full">
+          <div className="relative max-w-5xl w-full">
             <img
               src={selectedImage}
               alt="Nagyított kép"

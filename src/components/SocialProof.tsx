@@ -49,6 +49,27 @@ const testimonials = [
 export function SocialProof() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStart - touchEnd > 75) {
+      // Swipe left
+      showNext();
+    }
+    if (touchStart - touchEnd < -75) {
+      // Swipe right
+      showPrev();
+    }
+  };
 
   const showPrev = () => {
     if (!isAnimating) {
@@ -72,56 +93,51 @@ export function SocialProof() {
   }, [currentIndex]);
 
   return (
-    <section className="py-20 bg-white relative overflow-hidden">
-      {/* Animated background blobs */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl animate-blob"></div>
-        <div className="absolute top-0 -right-4 w-72 h-72 bg-yellow-500 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000"></div>
-        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000"></div>
-      </div>
+    <section className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <FadeIn>
+        <div className="text-center mb-8 sm:mb-12">
+          <span className="inline-block px-4 py-2 rounded-full bg-gradient-to-r from-purple-100 to-blue-100 text-purple-700 text-sm font-medium mb-4">
+            Vélemények
+          </span>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold">
+            Mit Mondanak <span className="bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text">Ügyfeleink</span>
+          </h2>
+          <p className="mt-4 text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
+            Elégedett ügyfeleink visszajelzései alapján folyamatosan fejlődünk
+          </p>
+        </div>
+      </FadeIn>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <FadeIn>
-          <div className="text-center">
-            <span className="inline-block px-4 py-2 rounded-full bg-gradient-to-r from-purple-100 to-blue-100 text-purple-700 text-sm font-medium mb-4">
-              Vélemények
-            </span>
-            <h2 className="text-4xl font-bold">
-              Mit Mondanak <span className="bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text">Ügyfeleink</span>
-            </h2>
-            <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
-              Elégedett ügyfeleink visszajelzései alapján folyamatosan fejlődünk
-            </p>
-          </div>
-        </FadeIn>
-
-        {/* Testimonials Carousel */}
-        <div className="mt-20 relative">
-          <div className="overflow-hidden">
-            <div 
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${currentIndex * 50}%)` }}
-            >
-              {testimonials.map((testimonial, index) => (
-                <div 
-                  key={index}
-                  className="w-full md:w-1/2 flex-shrink-0 px-4"
-                >
-                  <div className="group bg-white rounded-xl shadow-lg border p-8 hover:border-purple-200 transition-all duration-300 hover:shadow-2xl relative overflow-hidden h-full">
-                    {/* Gradient background that shows on hover */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${testimonial.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
-                    
-                    <div className="relative flex gap-4">
-                      <div className="flex-shrink-0">
-                        <img
-                          src={testimonial.image}
-                          alt={testimonial.name}
-                          className="w-12 h-12 rounded-full object-cover"
-                        />
-                      </div>
+      {/* Testimonials Carousel */}
+      <div className="relative mt-8 sm:mt-12">
+        <div 
+          className="overflow-hidden touch-pan-y"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          <div 
+            className="flex transition-transform duration-500 ease-in-out"
+            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+          >
+            {testimonials.map((testimonial, index) => (
+              <div 
+                key={index}
+                className="w-full flex-shrink-0 px-4"
+              >
+                <div className="group bg-white rounded-xl shadow-lg border p-6 sm:p-8 hover:border-purple-200 transition-all duration-300 hover:shadow-xl relative overflow-hidden h-full">
+                  <div className={`absolute inset-0 bg-gradient-to-br ${testimonial.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
+                  
+                  <div className="relative">
+                    <div className="flex items-center gap-4">
+                      <img
+                        src={testimonial.image}
+                        alt={testimonial.name}
+                        className="w-12 h-12 rounded-full object-cover"
+                      />
                       <div>
                         <div className="text-lg font-semibold">{testimonial.name}</div>
-                        <div className="text-gray-600">
+                        <div className="text-gray-600 text-sm">
                           {testimonial.role}, {testimonial.company}
                         </div>
                       </div>
@@ -131,42 +147,55 @@ export function SocialProof() {
                         <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
                       ))}
                     </div>
-                    <div className="mt-4 text-gray-600 italic">"{testimonial.content}"</div>
+                    <div className="mt-4 text-gray-600 italic text-base sm:text-lg">"{testimonial.content}"</div>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
-
-          {/* Navigation Buttons */}
-          <button
-            onClick={showPrev}
-            className="absolute top-1/2 -left-4 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-lg border hover:border-purple-200 transition-all duration-300"
-            disabled={isAnimating}
-          >
-            <ChevronLeft className="h-6 w-6 text-gray-600" />
-          </button>
-          <button
-            onClick={showNext}
-            className="absolute top-1/2 -right-4 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-lg border hover:border-purple-200 transition-all duration-300"
-            disabled={isAnimating}
-          >
-            <ChevronRight className="h-6 w-6 text-gray-600" />
-          </button>
         </div>
 
-        {/* Review Button */}
-        <div className="mt-12 text-center">
-          <Button
-            variant="outline"
-            size="lg"
-            className="border-2 hover:bg-gradient-to-r hover:from-purple-50 hover:to-blue-50"
-            onClick={() => window.open("https://www.google.com/maps/place//data=!4m3!3m2!1s0x48037b3dfc5abced:0x8236b98506633346!12e1?source=g.page.m.ia._&laa=nmx-review-solicitation-ia2", "_blank")}
-          >
-            <Star className="mr-2 h-5 w-5 text-yellow-500" />
-            Írjon Véleményt
-          </Button>
+        {/* Navigation Dots */}
+        <div className="flex justify-center gap-2 mt-6">
+          {testimonials.map((_, index) => (
+            <button
+              key={index}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                index === currentIndex ? 'bg-purple-600 w-4' : 'bg-gray-300'
+              }`}
+              onClick={() => setCurrentIndex(index)}
+            />
+          ))}
         </div>
+
+        {/* Navigation Buttons - Hidden on mobile */}
+        <button
+          onClick={showPrev}
+          className="hidden sm:block absolute top-1/2 -left-4 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-lg border hover:border-purple-200 transition-all duration-300"
+          disabled={isAnimating}
+        >
+          <ChevronLeft className="h-6 w-6 text-gray-600" />
+        </button>
+        <button
+          onClick={showNext}
+          className="hidden sm:block absolute top-1/2 -right-4 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-lg border hover:border-purple-200 transition-all duration-300"
+          disabled={isAnimating}
+        >
+          <ChevronRight className="h-6 w-6 text-gray-600" />
+        </button>
+      </div>
+
+      {/* Review Button */}
+      <div className="mt-8 sm:mt-12 text-center">
+        <Button
+          variant="outline"
+          size="lg"
+          className="w-full sm:w-auto border-2 hover:bg-gradient-to-r hover:from-purple-50 hover:to-blue-50"
+          onClick={() => window.open("https://www.google.com/maps", "_blank")}
+        >
+          <Star className="mr-2 h-5 w-5 text-yellow-500" />
+          Írjon Véleményt
+        </Button>
       </div>
     </section>
   );
