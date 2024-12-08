@@ -1,9 +1,92 @@
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Globe, ShoppingCart, Users, LineChart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { FadeIn, SlideIn } from '@/components/ui/motion';
 import { Link } from 'react-router-dom';
 import { Process } from '@/components/Process';
 import { Contact } from '@/components/Contact';
+
+const localServices = [
+  {
+    title: 'Bemutatkozó Weboldal Készítés',
+    description: 'Modern, professzionális bemutatkozó weboldalak szekszárdi vállalkozásoknak.',
+    features: [
+      'Reszponzív design',
+      'SEO optimalizálás',
+      'Kapcsolatfelvételi űrlap',
+      'Google Térkép integráció'
+    ]
+  },
+  {
+    title: 'Webáruház Készítés',
+    description: 'Online értékesítési felület kialakítása szekszárdi üzleteknek.',
+    features: [
+      'Termékkezelő rendszer',
+      'Online fizetés',
+      'Készletkezelés',
+      'Automatikus számlázás'
+    ]
+  },
+  {
+    title: 'Egyedi Weboldal Fejlesztés',
+    description: 'Speciális igényekre szabott weboldalak szekszárdi cégeknek.',
+    features: [
+      'Egyedi funkciók',
+      'Integrációk',
+      'Automatizációk',
+      'Többnyelvű megoldások'
+    ]
+  }
+];
+
+const benefits = [
+  {
+    icon: <Globe className="h-6 w-6" />,
+    title: 'Helyi Online Jelenlét',
+    description: 'Erős online jelenlét Szekszárdon és környékén, hogy a helyi ügyfelek könnyen megtalálják vállalkozását.'
+  },
+  {
+    icon: <ShoppingCart className="h-6 w-6" />,
+    title: 'Növekvő Forgalom',
+    description: 'Több helyi vásárló és ügyfél a professzionális weboldal segítségével.'
+  },
+  {
+    icon: <Users className="h-6 w-6" />,
+    title: 'Helyi Kapcsolatok',
+    description: 'Személyes kapcsolattartás és támogatás Szekszárdon.'
+  },
+  {
+    icon: <LineChart className="h-6 w-6" />,
+    title: 'Mérhető Eredmények',
+    description: 'Részletes statisztikák a weboldal teljesítményéről és a helyi látogatókról.'
+  }
+];
+
+const localAreas = [
+  {
+    city: 'Szekszárd',
+    description: 'Központi irodánk Szekszárdon található, személyes konzultációval.'
+  },
+  {
+    city: 'Tolna',
+    description: 'Weboldal készítés tolnai vállalkozásoknak, helyszíni egyeztetéssel.'
+  },
+  {
+    city: 'Bátaszék',
+    description: 'Modern weboldalak készítése bátaszéki cégeknek.'
+  },
+  {
+    city: 'Decs',
+    description: 'Webfejlesztés és támogatás decsi vállalkozásoknak.'
+  },
+  {
+    city: 'Őcsény',
+    description: 'Professzionális weboldalak őcsényi vállalkozóknak.'
+  },
+  {
+    city: 'Sióagárd',
+    description: 'Weboldal készítés és karbantartás Sióagárdon.'
+  }
+];
 
 export function WebsiteDevelopmentSzekszard() {
   return (
@@ -58,28 +141,75 @@ export function WebsiteDevelopmentSzekszard() {
               <div className="space-y-4 text-gray-600">
                 <p>
                   Szekszárdi webfejlesztő csapatunk modern, reszponzív weboldalakat készít helyi 
-                  vállalkozásoknak. Személyes egyeztetéssel, gyors kivitelezéssel és folyamatos 
-                  támogatással segítjük vállalkozása online sikerét.
+                  vállalkozásoknak. A weboldal készítés Szekszárdon személyes egyeztetéssel kezdődik, 
+                  ahol felmérjük az Ön egyedi igényeit és céljait.
+                </p>
+                <p>
+                  Szekszárdi weboldal készítés szolgáltatásunk teljes körű megoldást nyújt: a tervezéstől 
+                  a fejlesztésen át a karbantartásig mindent egy kézből biztosítunk. Helyi vállalkozásként 
+                  értjük a szekszárdi piac sajátosságait és igényeit.
                 </p>
                 <p>
                   A weboldal készítés Szekszárdon nem csak egy szolgáltatás számunkra - küldetésünk, 
-                  hogy a helyi vállalkozások modern és hatékony online jelenléttel rendelkezzenek.
+                  hogy a helyi vállalkozások modern és hatékony online jelenléttel rendelkezzenek, 
+                  ami valódi üzleti eredményeket hoz.
                 </p>
-                <h3 className="text-xl font-semibold mt-8">
-                  Miért válasszon minket weboldal készítéshez Szekszárdon?
-                </h3>
-                <ul className="space-y-2 list-disc pl-6">
-                  <li>Személyes konzultáció Szekszárdon</li>
-                  <li>Modern weboldal fejlesztés</li>
-                  <li>Mobilbarát, reszponzív design</li>
-                  <li>SEO optimalizálás a helyi keresésekre</li>
-                  <li>Google Cégem profil beállítása</li>
-                  <li>Folyamatos támogatás és karbantartás</li>
-                  <li>Szekszárdi referenciák</li>
-                </ul>
               </div>
             </div>
           </FadeIn>
+        </div>
+
+        {/* Services Grid */}
+        <div className="mt-16">
+          <FadeIn>
+            <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8">
+              Weboldal Készítés <span className="bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text">Szolgáltatásaink</span> Szekszárdon
+            </h2>
+          </FadeIn>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {localServices.map((service, index) => (
+              <SlideIn key={index} delay={0.1 * index} direction="up">
+                <div className="bg-white rounded-xl shadow-lg border p-6 hover:border-purple-200 transition-all duration-300">
+                  <h3 className="text-xl font-semibold mb-3">{service.title}</h3>
+                  <p className="text-gray-600 mb-4">{service.description}</p>
+                  <ul className="space-y-2">
+                    {service.features.map((feature, i) => (
+                      <li key={i} className="flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-600 to-blue-500" />
+                        <span className="text-gray-600">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </SlideIn>
+            ))}
+          </div>
+        </div>
+
+        {/* Benefits Section */}
+        <div className="mt-16">
+          <FadeIn>
+            <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8">
+              Weboldal Készítés <span className="bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text">Előnyei</span> Szekszárdon
+            </h2>
+          </FadeIn>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {benefits.map((benefit, index) => (
+              <SlideIn key={index} delay={0.1 * index} direction="up">
+                <div className="bg-white rounded-xl shadow-lg border p-6 hover:border-purple-200 transition-all duration-300">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center text-white">
+                      {benefit.icon}
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold mb-2">{benefit.title}</h3>
+                      <p className="text-gray-600">{benefit.description}</p>
+                    </div>
+                  </div>
+                </div>
+              </SlideIn>
+            ))}
+          </div>
         </div>
 
         {/* Process Section */}
@@ -97,21 +227,29 @@ export function WebsiteDevelopmentSzekszard() {
           <Process />
         </div>
 
-        {/* Local SEO Content */}
+        {/* Local Areas Section */}
         <div className="mt-16">
           <FadeIn>
             <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-xl p-8">
-              <h2 className="text-2xl font-bold mb-4 text-center">
+              <h2 className="text-2xl font-bold mb-6 text-center">
                 Weboldal Készítés <span className="bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text">Szekszárd</span> és Környéke
               </h2>
-              <div className="space-y-4 text-gray-600">
-                <p>
-                  Szolgáltatási területünk kiterjed Szekszárd mellett a környező településekre is. 
-                  Vállaljuk weboldal készítést Tolnán, Bátaszéken, Decsen és a környező településeken is.
-                </p>
-                <p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {localAreas.map((area, index) => (
+                  <div key={index} className="bg-white rounded-lg p-4 shadow-sm">
+                    <h3 className="font-semibold mb-2">{area.city}</h3>
+                    <p className="text-gray-600 text-sm">{area.description}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-8 text-center text-gray-600">
+                <p className="mb-4">
                   Weboldal készítés Szekszárdon már 80.000 Ft-tól, amely tartalmazza a személyes 
                   konzultációt, modern dizájnt, mobilbarát megjelenést és 3 hónap ingyenes karbantartást.
+                </p>
+                <p>
+                  Válassza a helyi weboldal készítést Szekszárdon, és építse vállalkozása online jelenlétét 
+                  szakértő segítséggel!
                 </p>
               </div>
             </div>

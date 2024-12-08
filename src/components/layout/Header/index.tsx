@@ -9,11 +9,15 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b">
+    <header role="banner" className="sticky top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex justify-between items-center py-6">
+        <nav role="navigation" aria-label="Main navigation" className="flex justify-between items-center py-6">
           <div className="flex justify-start lg:w-0 lg:flex-1">
-            <Link to="/" className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text hover:opacity-80 transition-opacity">
+            <Link 
+              to="/" 
+              aria-label="Onlinelepes"
+              className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text hover:opacity-80 transition-opacity"
+            >
               Onlinelepes
             </Link>
           </div>
@@ -22,7 +26,10 @@ export function Header() {
 
           <div className="hidden md:flex md:ml-12">
             <Link to="/kapcsolat">
-              <Button className="bg-gradient-to-r from-purple-600 to-blue-500 text-white hover:opacity-90 transition-opacity">
+              <Button 
+                aria-label="Ingyenes konzultáció"
+                className="bg-gradient-to-r from-purple-600 to-blue-500 text-white hover:opacity-90 transition-opacity"
+              >
                 Ingyenes Konzultáció
               </Button>
             </Link>
@@ -30,13 +37,15 @@ export function Header() {
 
           <div className="md:hidden">
             <button
+              aria-label={isMenuOpen ? "Menü bezárása" : "Menü megnyitása"}
+              aria-expanded={isMenuOpen}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-gray-700 hover:text-purple-600 transition-colors"
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
-        </div>
+        </nav>
       </div>
 
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
