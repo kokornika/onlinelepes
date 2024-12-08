@@ -1,5 +1,5 @@
 import { Menu, X } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { MobileMenu } from './MobileMenu';
@@ -7,9 +7,17 @@ import { Navigation } from './Navigation';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showBanner, setShowBanner] = useState(true);
+
+  useEffect(() => {
+    const isHidden = localStorage.getItem('hideChristmasBanner');
+    if (isHidden) {
+      setShowBanner(false);
+    }
+  }, []);
 
   return (
-    <header className="fixed w-full bg-white/80 backdrop-blur-md z-50 border-b">
+    <header className={`fixed w-full bg-white/80 backdrop-blur-md z-50 border-b transition-all duration-300 ${showBanner ? 'top-9' : 'top-0'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex justify-between items-center py-6">
           <div className="flex justify-start lg:w-0 lg:flex-1">
@@ -21,9 +29,11 @@ export function Header() {
           <Navigation />
 
           <div className="hidden md:flex md:ml-12">
-            <Button className="bg-gradient-to-r from-purple-600 to-blue-500 text-white hover:opacity-90 transition-opacity">
-              Ingyenes Konzultáció
-            </Button>
+            <Link to="/kapcsolat">
+              <Button className="bg-gradient-to-r from-purple-600 to-blue-500 text-white hover:opacity-90 transition-opacity">
+                Ingyenes Konzultáció
+              </Button>
+            </Link>
           </div>
 
           <div className="md:hidden">

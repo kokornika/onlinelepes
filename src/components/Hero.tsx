@@ -1,8 +1,11 @@
 import { ArrowRight, Code2, Rocket, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { FadeIn } from '@/components/ui/motion';
+import { Link, useNavigate } from 'react-router-dom';
 
 export function Hero() {
+  const navigate = useNavigate();
+
   return (
     <div className="relative overflow-hidden bg-white/50 backdrop-blur-sm pt-32 pb-20">
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -19,22 +22,25 @@ export function Hero() {
           <FadeIn delay={0.4}>
             <p className="mt-8 text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               Professzionális weboldalkészítés modern technológiákkal. Segítünk online jelenlétének 
-              kialakításában, hogy vállalkozása sikeresen működjön a digitális térben.
+              kialításában, hogy vállalkozása sikeresen működjön a digitális térben.
             </p>
           </FadeIn>
 
           <FadeIn delay={0.6}>
             <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
-              <Button 
-                size="lg" 
-                className="bg-gradient-to-r from-purple-600 to-blue-500 text-white hover:opacity-90 transition-opacity"
-              >
-                Kezdjük El <ArrowRight className="ml-2" size={20} />
-              </Button>
+              <Link to="/kezdjuk-el">
+                <Button 
+                  size="lg" 
+                  className="bg-gradient-to-r from-purple-600 to-blue-500 text-white hover:opacity-90 transition-opacity"
+                >
+                  Kezdjük El <ArrowRight className="ml-2" size={20} />
+                </Button>
+              </Link>
               <Button 
                 size="lg" 
                 variant="outline"
                 className="border-2 hover:bg-gradient-to-r hover:from-purple-50 hover:to-blue-50"
+                onClick={() => navigate('/referenciak')}
               >
                 Referenciák Megtekintése
               </Button>
