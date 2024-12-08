@@ -47,28 +47,6 @@
   --ring: 0 0% 83.1%;
 }
 
-@keyframes fall {
-  0% {
-    transform: translateY(-10vh) rotate(0deg) translateX(0);
-  }
-  25% {
-    transform: translateY(25vh) rotate(45deg) translateX(15px);
-  }
-  50% {
-    transform: translateY(50vh) rotate(90deg) translateX(-15px);
-  }
-  75% {
-    transform: translateY(75vh) rotate(135deg) translateX(15px);
-  }
-  100% {
-    transform: translateY(100vh) rotate(180deg) translateX(-15px);
-  }
-}
-
-.animate-fall {
-  animation: fall linear infinite;
-}
-
 @keyframes blob {
   0% {
     transform: translate(0px, 0px) scale(1);

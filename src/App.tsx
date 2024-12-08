@@ -15,13 +15,13 @@ import { LetsStart } from '@/pages/LetsStart';
 import { References } from '@/pages/References';
 import { ChatbotWidget } from '@/components/ChatbotWidget';
 import { ScrollToTop } from '@/components/ScrollToTop';
-import { ChristmasTheme } from '@/components/ChristmasTheme';
+import { ChristmasBanner } from '@/components/ChristmasBanner';
 
 export default function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-white to-gray-50">
       <ScrollToTop />
-      <ChristmasTheme />
+      <ChristmasBanner />
       <Header />
       <main className="relative">
         <Routes>
