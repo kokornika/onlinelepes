@@ -95,9 +95,10 @@ const handler: Handler = async (event) => {
     const params = new URLSearchParams({
       url: url,
       key: apiKey,
-      strategy: 'mobile',
-      category: ['performance', 'accessibility', 'best-practices', 'seo'].join(',')
+      strategy: 'mobile'
     });
+
+    // A categories paraméter eltávolítva, mivel az API alapértelmezetten visszaadja az összes kategóriát
 
     const fullUrl = `${apiUrl}?${params.toString()}`;
     console.log('Full API URL:', fullUrl);
