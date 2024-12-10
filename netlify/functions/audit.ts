@@ -48,7 +48,8 @@ const handler: Handler = async (event) => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS'
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Content-Type': 'application/json'
   };
 
   try {
@@ -78,32 +79,28 @@ const handler: Handler = async (event) => {
     }
 
     console.log('Making request to PageSpeed API for URL:', url);
-    
-    // Split the API request into multiple concurrent requests
-    const strategies = ['mobile', 'desktop'];
-    const requests = strategies.map(strategy => 
-      axios.get(`https://www.googleapis.com/pagespeedonline/v5/runPagespeed`, {
-        params: {
-          url: url,
-          key: process.env.PAGESPEED_API_KEY,
-          strategy: strategy
-        },
-        timeout: 25000
-      })
-    );
 
-    const responses = await Promise.race([
-      Promise.all(requests),
-      new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('API Timeout')), 25000)
-      )
-    ]);
+    const apiUrl = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed';
+    const params = {
+      url: url,
+      key: process.env.PAGESPEED_API_KEY,
+      strategy: 'mobile',
+      category: ['performance', 'accessibility', 'best-practices', 'seo'].join(',')
+    };
 
-    const mobileData = responses[0].data;
+    const response = await axios.get(apiUrl, {
+      params,
+      timeout: 20000,
+      validateStatus: (status) => status < 500
+    });
+
+    if (response.status !== 200) {
+      throw new Error(`PageSpeed API returned status ${response.status}`);
+    }
+
     console.log('Successfully received PageSpeed data');
 
-    const categories = mobileData.lighthouseResult.categories;
-    const audits = mobileData.lighthouseResult.audits;
+    const { categories, audits } = response.data.lighthouseResult;
 
     const mainMetrics = {
       performance: categories.performance.score,
@@ -140,10 +137,7 @@ const handler: Handler = async (event) => {
 
     return {
       statusCode: 200,
-      headers: {
-        ...headers,
-        'Content-Type': 'application/json'
-      },
+      headers,
       body: JSON.stringify(report)
     };
 
@@ -153,17 +147,17 @@ const handler: Handler = async (event) => {
     let statusCode = 500;
     let errorMessage = 'Hiba történt az audit során';
     
-    if (error.message === 'API Timeout') {
+    if (error.code === 'ECONNABORTED' || error.message.includes('timeout')) {
       statusCode = 504;
       errorMessage = 'Az audit túl sokáig tartott. Kérjük, próbálja újra később.';
+    } else if (error.response) {
+      statusCode = error.response.status;
+      errorMessage = `API hiba: ${error.response.data?.error?.message || error.message}`;
     }
 
     return {
       statusCode,
-      headers: {
-        ...headers,
-        'Content-Type': 'application/json'
-      },
+      headers,
       body: JSON.stringify({
         error: errorMessage,
         details: error.message

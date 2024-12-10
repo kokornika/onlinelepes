@@ -18,6 +18,10 @@
   included_files = [".env"]
   timeout = 30
 
+[functions.audit]
+  memory = 1024
+  timeout = 30
+
 [build.environment]
   NODE_VERSION = "18"
 
