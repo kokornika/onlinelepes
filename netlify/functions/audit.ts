@@ -78,23 +78,38 @@ const handler: Handler = async (event) => {
       };
     }
 
-    console.log('Making request to PageSpeed API for URL:', url);
-
-    const apiUrl = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed';
-    const params = {
-      url: url,
-      key: process.env.PAGESPEED_API_KEY,
-      strategy: 'mobile',
-      category: ['performance', 'accessibility', 'best-practices', 'seo'].join(',')
-    };
-
-    const response = await axios.get(apiUrl, {
-      params,
-      timeout: 20000,
-      validateStatus: (status) => status < 500
+    console.log('Environment:', { 
+      nodeEnv: process.env.NODE_ENV, 
+      hasApiKey: !!process.env.PAGESPEED_API_KEY,
+      apiKeyLength: process.env.PAGESPEED_API_KEY?.length 
     });
 
+    console.log('Making request to PageSpeed API for URL:', url);
+
+    const apiKey = process.env.PAGESPEED_API_KEY;
+    if (!apiKey) {
+      throw new Error('PageSpeed API key is not configured');
+    }
+
+    const apiUrl = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed';
+    const params = new URLSearchParams({
+      url: url,
+      key: apiKey,
+      strategy: 'mobile',
+      category: ['performance', 'accessibility', 'best-practices', 'seo'].join(',')
+    });
+
+    const fullUrl = `${apiUrl}?${params.toString()}`;
+    console.log('Full API URL:', fullUrl);
+
+    const response = await axios.get(fullUrl, {
+      timeout: 20000,
+      validateStatus: null
+    });
+
+    console.log('API Response Status:', response.status);
     if (response.status !== 200) {
+      console.error('API Error Response:', response.data);
       throw new Error(`PageSpeed API returned status ${response.status}`);
     }
 
