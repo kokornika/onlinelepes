@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Code, Megaphone, Search, Users, LineChart, Settings, BookOpen } from 'lucide-react';
+import { Code, Megaphone, Search, Users, LineChart, Settings, BookOpen, Activity } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -143,6 +143,16 @@ export function Navigation() {
           >
             <BookOpen className="h-5 w-5" />
             Blog
+          </Link>
+        </NavigationMenuItem>
+
+        <NavigationMenuItem>
+          <Link 
+            to="/weboldal-audit"
+            className="flex items-center gap-2 text-gray-700 hover:text-purple-600 transition-colors px-4 py-2 rounded-md hover:bg-purple-50 whitespace-nowrap"
+          >
+            <Activity className="h-5 w-5" />
+            Weboldal Audit
           </Link>
         </NavigationMenuItem>
       </NavigationMenuList>

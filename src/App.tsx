@@ -24,6 +24,7 @@ const Privacy = lazy(() => import('@/pages/Privacy').then(module => ({ default: 
 const CookiePolicy = lazy(() => import('@/pages/CookiePolicy').then(module => ({ default: module.CookiePolicy })));
 const Blog = lazy(() => import('@/pages/Blog').then(module => ({ default: module.Blog })));
 const WebsiteDevelopmentSzekszard = lazy(() => import('@/pages/landing/WebsiteDevelopmentSzekszard').then(module => ({ default: module.WebsiteDevelopmentSzekszard })));
+const WebsiteAudit = lazy(() => import('@/pages/WebsiteAudit').then(module => ({ default: module.WebsiteAudit })));
 
 // Loading fallback
 const LoadingFallback = () => (
@@ -57,6 +58,7 @@ export default function App() {
             <Route path="/adatvedelem" element={<Privacy />} />
             <Route path="/cookie-szabalyzat" element={<CookiePolicy />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/weboldal-audit" element={<WebsiteAudit />} />
           </Routes>
         </Suspense>
       </main>
