@@ -78,25 +78,53 @@ const handler: Handler = async (event) => {
       };
     }
 
-    // PageSpeed Insights API hívás
+    // Validate API key
     const apiKey = process.env.PAGESPEED_API_KEY;
     if (!apiKey) {
+      console.error('PageSpeed API key is missing');
       return {
         statusCode: 500,
         headers,
-        body: JSON.stringify({ error: 'API key is not configured' })
+        body: JSON.stringify({ 
+          error: 'API konfiguráció hiba',
+          details: 'PageSpeed API kulcs nincs beállítva'
+        })
       };
     }
 
+    // Log environment for debugging
+    console.log('Environment:', {
+      nodeEnv: process.env.NODE_ENV,
+      hasApiKey: !!apiKey,
+      apiKeyLength: apiKey.length
+    });
+
+    // Make request to PageSpeed API
+    console.log('Making request to PageSpeed API for URL:', url);
     const pageSpeedUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&strategy=mobile&key=${apiKey}`;
     
     const response = await axios.get<PageSpeedResponse>(pageSpeedUrl, {
-      timeout: 30000 // 30 másodperces timeout
+      timeout: 30000, // 30 sec timeout
+      validateStatus: null // Allow any status code
     });
+
+    // Log response status and data for debugging
+    console.log('PageSpeed API response status:', response.status);
+    if (response.status !== 200) {
+      console.error('PageSpeed API error:', response.data);
+      return {
+        statusCode: response.status,
+        headers,
+        body: JSON.stringify({
+          error: 'PageSpeed API hiba',
+          details: response.data?.error?.message || 'Ismeretlen hiba történt'
+        })
+      };
+    }
 
     const { data } = response;
 
-    // Eredmények feldolgozása
+    // Process results
     const categories = data.lighthouseResult.categories;
     const audits = data.lighthouseResult.audits;
 
@@ -116,7 +144,7 @@ const handler: Handler = async (event) => {
       cls: audits['cumulative-layout-shift']
     };
 
-    // Magyar nyelvű jelentés összeállítása
+    // Create report
     const report = {
       url,
       timestamp: new Date().toISOString(),
@@ -141,18 +169,19 @@ const handler: Handler = async (event) => {
     };
 
   } catch (error: any) {
-    console.error('Error:', error);
+    console.error('Function error:', error);
     
-    // Részletesebb hibaüzenet
-    const errorMessage = error.response?.data?.error?.message || error.message || 'Internal Server Error';
-    
+    const errorResponse = {
+      error: 'Hiba történt az audit során',
+      details: error.message,
+      status: error.response?.status,
+      data: error.response?.data
+    };
+
     return {
       statusCode: error.response?.status || 500,
       headers,
-      body: JSON.stringify({ 
-        error: 'Hiba történt az audit során',
-        details: errorMessage
-      })
+      body: JSON.stringify(errorResponse)
     };
   }
 };
