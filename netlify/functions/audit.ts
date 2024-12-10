@@ -43,32 +43,31 @@ const translateScore = (score: number): string => {
 };
 
 const handler: Handler = async (event) => {
-  // CORS headers
+  console.log('Function started');
+  
   const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Content-Type': 'application/json'
+    'Access-Control-Allow-Methods': 'POST, OPTIONS'
   };
 
-  // Handle preflight requests
-  if (event.httpMethod === 'OPTIONS') {
-    return {
-      statusCode: 204,
-      headers,
-      body: ''
-    };
-  }
-
-  if (event.httpMethod !== 'POST') {
-    return {
-      statusCode: 405,
-      headers,
-      body: JSON.stringify({ error: 'Method Not Allowed' })
-    };
-  }
-
   try {
+    if (event.httpMethod === 'OPTIONS') {
+      return {
+        statusCode: 204,
+        headers,
+        body: ''
+      };
+    }
+
+    if (event.httpMethod !== 'POST') {
+      return {
+        statusCode: 405,
+        headers,
+        body: JSON.stringify({ error: 'Method Not Allowed' })
+      };
+    }
+
     const { url } = JSON.parse(event.body || '{}');
     if (!url) {
       return {
@@ -78,55 +77,33 @@ const handler: Handler = async (event) => {
       };
     }
 
-    // Validate API key
-    const apiKey = process.env.PAGESPEED_API_KEY;
-    if (!apiKey) {
-      console.error('PageSpeed API key is missing');
-      return {
-        statusCode: 500,
-        headers,
-        body: JSON.stringify({ 
-          error: 'API konfiguráció hiba',
-          details: 'PageSpeed API kulcs nincs beállítva'
-        })
-      };
-    }
-
-    // Log environment for debugging
-    console.log('Environment:', {
-      nodeEnv: process.env.NODE_ENV,
-      hasApiKey: !!apiKey,
-      apiKeyLength: apiKey.length
-    });
-
-    // Make request to PageSpeed API
     console.log('Making request to PageSpeed API for URL:', url);
-    const pageSpeedUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&strategy=mobile&key=${apiKey}`;
     
-    const response = await axios.get<PageSpeedResponse>(pageSpeedUrl, {
-      timeout: 30000, // 30 sec timeout
-      validateStatus: null // Allow any status code
-    });
+    // Split the API request into multiple concurrent requests
+    const strategies = ['mobile', 'desktop'];
+    const requests = strategies.map(strategy => 
+      axios.get(`https://www.googleapis.com/pagespeedonline/v5/runPagespeed`, {
+        params: {
+          url: url,
+          key: process.env.PAGESPEED_API_KEY,
+          strategy: strategy
+        },
+        timeout: 25000
+      })
+    );
 
-    // Log response status and data for debugging
-    console.log('PageSpeed API response status:', response.status);
-    if (response.status !== 200) {
-      console.error('PageSpeed API error:', response.data);
-      return {
-        statusCode: response.status,
-        headers,
-        body: JSON.stringify({
-          error: 'PageSpeed API hiba',
-          details: response.data?.error?.message || 'Ismeretlen hiba történt'
-        })
-      };
-    }
+    const responses = await Promise.race([
+      Promise.all(requests),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('API Timeout')), 25000)
+      )
+    ]);
 
-    const { data } = response;
+    const mobileData = responses[0].data;
+    console.log('Successfully received PageSpeed data');
 
-    // Process results
-    const categories = data.lighthouseResult.categories;
-    const audits = data.lighthouseResult.audits;
+    const categories = mobileData.lighthouseResult.categories;
+    const audits = mobileData.lighthouseResult.audits;
 
     const mainMetrics = {
       performance: categories.performance.score,
@@ -144,7 +121,6 @@ const handler: Handler = async (event) => {
       cls: audits['cumulative-layout-shift']
     };
 
-    // Create report
     const report = {
       url,
       timestamp: new Date().toISOString(),
@@ -164,24 +140,34 @@ const handler: Handler = async (event) => {
 
     return {
       statusCode: 200,
-      headers,
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify(report)
     };
 
   } catch (error: any) {
-    console.error('Function error:', error);
+    console.error('Error:', error);
     
-    const errorResponse = {
-      error: 'Hiba történt az audit során',
-      details: error.message,
-      status: error.response?.status,
-      data: error.response?.data
-    };
+    let statusCode = 500;
+    let errorMessage = 'Hiba történt az audit során';
+    
+    if (error.message === 'API Timeout') {
+      statusCode = 504;
+      errorMessage = 'Az audit túl sokáig tartott. Kérjük, próbálja újra később.';
+    }
 
     return {
-      statusCode: error.response?.status || 500,
-      headers,
-      body: JSON.stringify(errorResponse)
+      statusCode,
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        error: errorMessage,
+        details: error.message
+      })
     };
   }
 };
