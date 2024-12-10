@@ -43,9 +43,27 @@ const translateScore = (score: number): string => {
 };
 
 const handler: Handler = async (event) => {
+  // CORS headers
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Content-Type': 'application/json'
+  };
+
+  // Handle preflight requests
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 204,
+      headers,
+      body: ''
+    };
+  }
+
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
+      headers,
       body: JSON.stringify({ error: 'Method Not Allowed' })
     };
   }
@@ -55,13 +73,28 @@ const handler: Handler = async (event) => {
     if (!url) {
       return {
         statusCode: 400,
+        headers,
         body: JSON.stringify({ error: 'URL is required' })
       };
     }
 
     // PageSpeed Insights API hívás
-    const pageSpeedUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&strategy=mobile&key=${process.env.PAGESPEED_API_KEY}`;
-    const { data } = await axios.get<PageSpeedResponse>(pageSpeedUrl);
+    const apiKey = process.env.PAGESPEED_API_KEY;
+    if (!apiKey) {
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({ error: 'API key is not configured' })
+      };
+    }
+
+    const pageSpeedUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&strategy=mobile&key=${apiKey}`;
+    
+    const response = await axios.get<PageSpeedResponse>(pageSpeedUrl, {
+      timeout: 30000 // 30 másodperces timeout
+    });
+
+    const { data } = response;
 
     // Eredmények feldolgozása
     const categories = data.lighthouseResult.categories;
@@ -103,14 +136,23 @@ const handler: Handler = async (event) => {
 
     return {
       statusCode: 200,
+      headers,
       body: JSON.stringify(report)
     };
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error:', error);
+    
+    // Részletesebb hibaüzenet
+    const errorMessage = error.response?.data?.error?.message || error.message || 'Internal Server Error';
+    
     return {
-      statusCode: 500,
-      body: JSON.stringify({ error: 'Internal Server Error' })
+      statusCode: error.response?.status || 500,
+      headers,
+      body: JSON.stringify({ 
+        error: 'Hiba történt az audit során',
+        details: errorMessage
+      })
     };
   }
 };
